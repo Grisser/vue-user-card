@@ -1,30 +1,46 @@
 <template>
     <div class="user-card">
-        <img src="img/70.jpg" class="user-photo">
-        <p class="user-nickname">romashka</p>
+        <img v-bind:src="user.picture.large" class="user-photo">
+        <p class="user-nickname">{{ user.login.username }}</p>
         <p class="user-name">
-            Иванов Иван<br>
-            Иванович
+            {{ firstName }}<br>
+            {{ lastName }}
         </p>
         <hr>
         <p class="user-info-item">
             <img src="img/location.png">
-            Москва, Юбилейная 50
+            {{ location }}
         </p>
         <p class="user-info-item">
             <img src="img/mail.png">
-            coldrabbit48@example.com
+            {{ user.email }}
         </p>
         <p class="user-info-item">
             <img src="img/phone.png">
-            +7-495-266-57-34
+            {{ user.phone }}
         </p>
     </div>
 </template>
 
 <script>
     export default {
-        name: "UserCard"
+        name: "UserCard",
+        props: ['user'],
+        computed: {
+            firstName() {
+                console.log(this.user);
+                return this.user.name.title + " " + this.user.name.first;
+            },
+            lastName() {
+                return this.user.name.last;
+            },
+            location() {
+
+                let loc = this.user.location;
+                return loc.country + ", " + loc.city + ", " + loc.street.name + ", " + loc.street.number;
+
+            }
+        }
     }
 </script>
 
